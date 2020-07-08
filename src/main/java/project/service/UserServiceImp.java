@@ -23,9 +23,7 @@ public class UserServiceImp implements UserService {
         this.userDao.add(user);
     }
 
-    @Transactional(
-            readOnly = true
-    )
+
     public List<User> listUsers() {
         return this.userDao.listUsers();
     }
@@ -37,7 +35,7 @@ public class UserServiceImp implements UserService {
         return this.userDao.remove(id);
     }
 
-    @Transactional
+
     @Override
     public User getUser(long id) {
         return this.userDao.getUser(id);

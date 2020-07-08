@@ -52,8 +52,7 @@ public class UserController {
 
     @GetMapping(value = "/edit")
     public String edit(Model model, long id) {
-        model.addAttribute("newUser", new User());
-        model.addAttribute("oldUser", userService.getUser(id));
+        model.addAttribute("user", userService.getUser(id));
         return "edit";
     }
 
