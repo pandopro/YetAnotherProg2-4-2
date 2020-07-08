@@ -4,7 +4,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import project.Model.User;
+import project.model.User;
 
 import javax.persistence.TypedQuery;
 import java.util.List;

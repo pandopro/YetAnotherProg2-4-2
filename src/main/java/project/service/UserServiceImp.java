@@ -4,7 +4,7 @@ package project.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.Model.User;
+import project.model.User;
 import project.dao.UserDAO;
 
 import java.util.List;
