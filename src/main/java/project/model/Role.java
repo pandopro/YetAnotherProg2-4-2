@@ -10,22 +10,30 @@ import java.util.Set;
 @Table(name = "roles")
 @Entity
 public class Role implements GrantedAuthority {
-    public Role() {
-    }
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<User> user;
     private String role;
 
+    public Role() {
+    }
 
-    private User user;
+    public Role(String role) {
+        this.role = role;
+    }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "username")
-    public User getUser() {
+    public Role(Long id, String role) {
+        this.id = id;
+        this.role = role;
+    }
+
+    public Set<User> getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Set<User> user) {
         this.user = user;
     }
 
@@ -45,12 +53,8 @@ public class Role implements GrantedAuthority {
         this.role = role;
     }
 
-    public Role(Long id, String role) {
-        this.id = id;
-        this.role = role;
-    }
-
     @Override
+    @Transient
     public String getAuthority() {
         return role;
     }

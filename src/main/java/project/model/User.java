@@ -4,23 +4,24 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Set;
 
 
 @Entity
-@Table
+@Table(name = "user")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String city;
+    @Column(unique = true)
     private String email;
     private String password;
-   // @OneToMany(mappedBy = "id" , fetch = FetchType.EAGER)
- //  @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Role> roles;
 
     public User() {
@@ -62,15 +63,43 @@ public class User implements UserDetails {
         return email;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
-    }
-
     public void setEmail(String email) {
         this.email = email;
     }
 
+
+    public Set<Role> getRoles() {
+
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Transient
+    public String[] getArrayOfRoles() {
+        String[] arrRoles = new String[roles.size()];
+        Iterator<Role> iter = roles.iterator();
+        int i = 0;
+        while (iter.hasNext()) {
+            arrRoles[i++] = iter.next().getRole();
+        }
+        return arrRoles;
+    }
+
+    @Transient
+    public String getStringRoles() {
+        return Arrays.toString(getArrayOfRoles());
+    }
+
+    @Override
+    @Transient
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
+    }
+
+    @Override
 
     public String getPassword() {
         return password;
@@ -81,35 +110,31 @@ public class User implements UserDetails {
     }
 
     @Override
+    @Transient
     public String getUsername() {
         return email;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
     @Override
+    @Transient
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @Transient
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @Transient
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @Transient
     public boolean isEnabled() {
         return true;
     }

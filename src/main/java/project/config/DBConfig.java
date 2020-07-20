@@ -10,8 +10,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import project.model.Role;
-import project.model.User;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -43,8 +41,7 @@ public class DBConfig {
         props.put("hibernate.show_sql", this.env.getProperty("hibernate.show_sql"));
         props.put("hibernate.hbm2ddl.auto", this.env.getProperty("hibernate.hbm2ddl.auto"));
         factoryBean.setHibernateProperties(props);
-        factoryBean.setAnnotatedClasses(User.class);
-        factoryBean.setAnnotatedClasses(Role.class);
+        factoryBean.setPackagesToScan("project.model");
         return factoryBean;
     }
 

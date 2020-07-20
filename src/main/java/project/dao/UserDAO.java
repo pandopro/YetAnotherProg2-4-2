@@ -16,4 +16,5 @@ public interface UserDAO {
 
     User getUser(long id);
 
+    User findByLogin(String login);
 }

@@ -10,11 +10,15 @@ public interface UserService {
 
     List<User> listUsers();
 
-    Boolean remove(long id);
+    boolean remove(long id);
 
     User getUser(long id);
 
-    Boolean edit(long id, User user);
+    User findByLogin(String login);
+
+    boolean edit(long id, User user);
+
+    boolean demo();
 
 
 }

@@ -5,8 +5,13 @@
     <title>Person List</title>
 </head>
 <body>
-<h1>Person List</h1>
-<a href="add">Add Person</a>
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"></input>
+</form>
+<br/><h1>Person List</h1>
+<a href="admin/add">Add Person</a>
+
 <br/><br/>
 <div>
     <table  cellpadding="10" border="1" width="80%" align="center" bgcolor="#ffcc00">
@@ -15,6 +20,7 @@
             <th>City</th>
             <th>Email</th>
             <th>Password</th>
+            <th>Roles</th>
             <th>...</th>
         </tr>
         <tr th:each ="person : ${listz}">
@@ -22,9 +28,10 @@
             <td th:utext="${person.getCity()}">...</td>
             <td th:utext="${person.getEmail()}">...</td>
             <td th:utext="${person.getPassword()}">...</td>
+            <td th:utext="${person.getStringRoles()}">...</td>
             <td>
-                <a th:href="@{/delete(id=${person.id})}">Delete</a>
-                <a th:href="@{/edit(id=${person.id})}">Edit</a>
+                <a th:href="@{/admin/delete(id=${person.id})}">Delete</a>
+                <a th:href="@{/admin/edit(id=${person.id})}">Edit</a>
 
             </td>
         </tr>

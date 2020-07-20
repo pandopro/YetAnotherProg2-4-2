@@ -7,7 +7,7 @@
 <body>
 
 <center><h1>edit form</h1>
-<form action="#" th:action="@{/edit}" th:object="${user}" method="post" >
+<form action="#" th:action="@{/admin/edit}" th:object="${user}" method="post" >
     <p>Name: <input type="text" th:value="*{name}" th:field="*{name}" /></p>
     <p>City: <input type="text" th:value="*{city}" th:field="*{city}" /></p>
     <p>Email: <input type="text" th:value="*{email}" th:field="*{email}" /></p>

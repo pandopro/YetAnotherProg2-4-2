@@ -4,8 +4,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import project.model.User;
-
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -15,6 +15,7 @@ class UserDAOImp implements UserDAO {
     private SessionFactory sessionFactory;
 
     @Override
+    @Transactional
     public void add(User user) {
         sessionFactory.getCurrentSession().save(user);
 
@@ -52,5 +53,14 @@ class UserDAOImp implements UserDAO {
     @Override
     public User getUser(long id) {
         return sessionFactory.getCurrentSession().get(User.class, id);
+    }
+
+    @Override
+    public User findByLogin(String login) {
+        Query query = sessionFactory.getCurrentSession().createQuery("from User where email =:one");
+        query.setParameter("one", login);
+        User findUser = (User) query.getResultList().get(0);
+        return findUser;
+
     }
 }
